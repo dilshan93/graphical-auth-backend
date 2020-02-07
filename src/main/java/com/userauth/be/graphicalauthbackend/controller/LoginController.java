@@ -1,12 +1,15 @@
 package com.userauth.be.graphicalauthbackend.controller;
 
+import com.userauth.be.graphicalauthbackend.dto.UserDTO;
+import com.userauth.be.graphicalauthbackend.entity.UserRegister;
+import com.userauth.be.graphicalauthbackend.service.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +18,18 @@ import java.util.List;
 @RequestMapping("/login")
 public class LoginController {
 
+    @Autowired
+    private LoginService loginService;
+
     @GetMapping("/getAll")
-    public ResponseEntity<List<String>> getAllUsers(){
-        List<String> newList = new ArrayList<>();
-        newList.add("Dilshan");
-        newList.add("Sahan");
-        newList.add("Dulitha");
-        return new ResponseEntity<>(newList, HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
+        List<UserDTO> userDTOS = loginService.getAllUserDetails();
+        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
+    }
+
+    @PostMapping("/Save")
+    public ResponseEntity<UserRegister> saveUser(@Valid @RequestBody UserDTO userDTO){
+        loginService.createUser(userDTO);
+        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
     }
 }
