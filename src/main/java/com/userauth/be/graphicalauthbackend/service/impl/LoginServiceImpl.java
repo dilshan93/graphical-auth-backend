@@ -42,6 +42,9 @@ public class LoginServiceImpl implements LoginService {
         UserRegister userRegister = new UserRegister();
         userRegister.setUserName(userDTO.getUserName());
         userRegister.setEmail(userDTO.getEmail());
+        userRegister.setFirstName(userDTO.getFirstName());
+        userRegister.setLastName(userDTO.getLastName());
+        userRegister.setPassWord(userDTO.getPassWord());
         userRepository.save(userRegister);
 
     }
