@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface UserRepository extends JpaRepository<UserRegister, Long>, JpaSpecificationExecutor<UserRegister> {
 
+    UserRegister findAllByUserNameAndPassWord(String userName, String Password);
 }

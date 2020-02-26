@@ -1,5 +1,6 @@
 package com.userauth.be.graphicalauthbackend.service.impl;
 
+import com.userauth.be.graphicalauthbackend.dto.LoginUserDTO;
 import com.userauth.be.graphicalauthbackend.dto.UserDTO;
 import com.userauth.be.graphicalauthbackend.entity.UserRegister;
 import com.userauth.be.graphicalauthbackend.repository.UserRepository;
@@ -46,6 +47,19 @@ public class LoginServiceImpl implements LoginService {
         userRegister.setLastName(userDTO.getLastName());
         userRegister.setPassWord(userDTO.getPassWord());
         userRepository.save(userRegister);
+
+    }
+
+    @Override
+    public UserRegister getUser(LoginUserDTO loginUserDTO) {
+
+        UserRegister userRegister = userRepository.findAllByUserNameAndPassWord(loginUserDTO.getUserName(), loginUserDTO.getPassWord());
+        if(userRegister != null){
+
+           return userRegister;
+        } else {
+            return null;
+        }
 
     }
 
