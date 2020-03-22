@@ -1,6 +1,8 @@
 package com.userauth.be.graphicalauthbackend.controller;
 
+import com.userauth.be.graphicalauthbackend.dto.BackendMessage;
 import com.userauth.be.graphicalauthbackend.dto.LoginUserDTO;
+import com.userauth.be.graphicalauthbackend.dto.TokenDTO;
 import com.userauth.be.graphicalauthbackend.dto.UserDTO;
 import com.userauth.be.graphicalauthbackend.entity.UserRegister;
 import com.userauth.be.graphicalauthbackend.service.LoginService;
@@ -22,21 +24,16 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<UserDTO>> getAllUsers(){
-        List<UserDTO> userDTOS = loginService.getAllUserDetails();
-        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
-    }
 
     @PostMapping("/Save")
-    public ResponseEntity<UserRegister> saveUser(@Valid @RequestBody UserDTO userDTO){
-        loginService.createUser(userDTO);
-        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
+    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO userDTO){
+        BackendMessage backendMessage = loginService.createUser(userDTO);
+        return ResponseEntity.ok(backendMessage);
     }
 
     @PostMapping("/getUserLogin")
-    public ResponseEntity<UserRegister> getLoginUser(@Valid @RequestBody LoginUserDTO loginUserDTO){
-        UserRegister userRegister = loginService.getUser(loginUserDTO);
-        return new ResponseEntity<>(userRegister, HttpStatus.OK);
+    public ResponseEntity<?> getLoginUser(@Valid @RequestBody LoginUserDTO loginUserDTO){
+        TokenDTO tokenDTO = loginService.getUser(loginUserDTO);
+        return ResponseEntity.ok(tokenDTO);
     }
 }
