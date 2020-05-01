@@ -11,8 +11,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,5 +37,12 @@ public class LoginController {
     public ResponseEntity<?> getLoginUser(@Valid @RequestBody LoginUserDTO loginUserDTO){
         TokenDTO tokenDTO = loginService.getUser(loginUserDTO);
         return ResponseEntity.ok(tokenDTO);
+    }
+
+    @GetMapping(path = { "/get/{username}" })
+    public String getImage(@PathVariable("username") String userName) throws SQLException {
+
+        String img = loginService.getImage(userName);
+        return img;
     }
 }

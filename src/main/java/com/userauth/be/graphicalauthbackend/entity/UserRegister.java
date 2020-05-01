@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,6 +42,9 @@ public class UserRegister {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @Lob
+    private Blob data;
 //    @Transient
 //    private String passwordConfirm;
 
